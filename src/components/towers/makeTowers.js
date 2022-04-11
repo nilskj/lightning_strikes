@@ -1,9 +1,4 @@
-import {
-  NUM_TOWERS,
-  SCREEN_HEIGHT,
-  SCREEN_WIDTH,
-  TOWER_GROUND_LEVEL,
-} from "../../util/globals";
+import { NUM_TOWERS, TOWER_GROUND_LEVEL } from "../../util/globals";
 
 function builder() {
   let builder = new Thing();
@@ -28,17 +23,6 @@ function builder() {
   });
 }
 
-export default function makeTowers() {
-  const towers = builder();
-
-  towers.listen("draw", () => {
-    const w = SCREEN_WIDTH / NUM_TOWERS;
-    const towerHeights = towers.heights();
-    for (let i = 0; i < towerHeights.length; i++) {
-      const h = towerHeights[i] * w;
-      fill_rect(i * w, SCREEN_HEIGHT - h, w, h, "gray");
-    }
-  });
-
-  return towers;
+export function makeTowers() {
+  return builder();
 }

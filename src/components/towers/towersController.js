@@ -1,4 +1,6 @@
-import { NUM_TOWERS, SCREEN_WIDTH } from "../../util/globals";
+import { NUM_TOWERS } from "../../util/globals";
+import { SCREEN_WIDTH } from "../../main";
+import { scaler } from "../../util/scaler";
 
 function calculateStrikeTargets(heights) {
   let max = heights[0];
@@ -19,13 +21,16 @@ function calculateStrikeTargets(heights) {
   };
 }
 
-export default function makeTowerController(towers) {
+export function makeTowerController(towers) {
   const controller = new Thing();
-  controller.listen("mousedown", (mouse_x) => {
+  controller.listen("mousedown", (mouse_x, mouse_y) => {
+    const canvas = scaler.getCanvasSize();
+    const x = mouse_x * canvas.scale;
     const w = SCREEN_WIDTH / NUM_TOWERS;
-    const target = Math.floor(mouse_x / w);
+    const target = Math.floor(x / w);
     towers.raise(target);
   });
+
   return {
     ...controller,
     strike: () => {

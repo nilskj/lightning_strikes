@@ -1,12 +1,16 @@
-import makeTowers from "./components/towers/makeTowers";
-import makeTowerController from "./components/towers/towersController";
 import { START_TIMER } from "./util/globals";
+import {
+  makeTowerController,
+  makeTowers,
+  renderTowers,
+} from "./components/towers";
 
 export default function game(assets) {
   let root = new Thing();
 
   let towers = makeTowers();
   const towerController = makeTowerController(towers);
+  renderTowers(towers, assets["./resources/BuildingBlock.svg"]);
 
   let timer = START_TIMER;
   root.listen("tick", (d) => {
@@ -16,6 +20,4 @@ export default function game(assets) {
       towerController.strike();
     }
   });
-
-  tick(true);
 }
